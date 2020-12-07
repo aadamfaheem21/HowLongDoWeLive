@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>About</title>
+  <meta name="description" content="About Page">
+
+  <!--incorporate into header.ejs-->
+  <html lang="en">
+  <meta name="author" content="Aadam Faheem & Cassie Elish">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+
+
+<body>
+  <header>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">How Long Do We Live?</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <h2 class="text-center">By: Aadam Faheem & Cassie Elish</h2>
+        </div>
+      </div>
+    </div>
+    <!--nav bar-->
+  </header>
+  <!--end incorporation into header.ejs-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-2">
+        <h2>Vocabulary</h2>
+      </div>
+      <div class="col-10">
+        <h2>Initial Prototypes</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-2">
+        <ul>
+          <li>Life expectancy: how long a person is expected to live, in years</li>
+        </ul>
+      </div>
+
+      <div class="col-5">
+        <h4>Cassie's Prototypes</h4>
+        <img src="public/images/cassie1.jpeg" style="width:30%;height:30%;"></img>
+        <img src="public/images/cassie2.jpeg" style="width:30%;height:30%;"></img>
+        <img src="public/images/cassie3.jpeg" style="width:30%;height:30%;"></img>
+        <h5>Understandability</h5>
+        <ul>
+          <li>The map is easy to understand as a legend is availaible to show how color displays life expectancy. Also, having a list of states and counties
+          on both the country and state page makes it easy for the user to find what they want. However, being taken to three different pages in order to select
+        the data may be a little confusing. Also, the maps do not display values over the years.</li>
+        </ul>
+        <h5>Achievability</h5>
+        <ul>
+          <li>This design is very achievable, only using a couple of different elements that we have not learned. We can use d3 to create chloropleth maps using
+          the data to create an interactive map. Other than that, only html elements are necessary to create this website.</li>
+        </ul>
+        <h5>Structure</h5>
+        <ul>
+          <li>The three page structure makes it so that each of the pages is less crowded. As a result, it is easier for the reader to analyze each of the elements
+            that we are trying to highlight. However, it also makes it easy to get lost in the multiple pages. Scrolling through multiple pages in order to get data
+          may be annoying for users.</li>
+        </ul>
+        <h5>Simplicity</h5>
+        <ul>
+          <li>Cassie's website design is somewhat simple to design. With each page being relatively simple to understand, the user does not need to do much work in interpreting the data.
+          However, having three pages for this process does make it both trickier to code and a little harder for the user.</li>
+        </ul>
+</div>
+        <div class="col-5">
+        <h4>Aadam's Prototypes</h4>
+        <img src="public/images/aadam1.jpeg" style="width:45%;height:30%;"></img>
+        <img src="public/images/aadam2.jpeg" style="width:45%;height:30%;"></img>
+        <h5>Understandability</h5>
+        <ul>
+          <li>Aadam's prototype is mostly easy to understand. All the buttons are clearly laid out, and it's apparent to the user that they can select different
+            options to generate different maps. However, the color coding is a little disorienting. Though I think everything should be color coded, making the
+            colors more muted would make the interface more accessible.</li>
+        </ul>
+        <h5>Achievability</h5>
+        <ul>
+          <li>All of Aadam's suggested prototype is achievable in Plotly through choropleth maps, which can be used to generate gradients based on the numbers provided.
+            The only potential problem may be finding svg files for every state, but I’m sure that with a little digging we should be able to do so.</li>
+        </ul>
+        <h5>Structure</h5>
+        <ul>
+          <li>Aadam does a good job of separating unrelated information and grouping together related information. By having the map be the center of the webpage,
+            and having other information on 3/4 sides of the map, he makes sure that everything is linked together in an obvious way. For example, though vocabulary
+             isn't directly related to the summary, they both relate to the map, so they make structural sense.</li>
+        </ul>
+        <h5>Simplicity</h5>
+        <ul>
+          <li>I think that Aadam's prototype could be a little simpler. Currently, the three factors influencing the map -- race, gender, and year -- are
+            all spread out on the main page, giving the user an overload of information. By making two out of three of those factors, race and gender, accessible
+            via a dropdown menu instead of as buttons, we could make the interface look cleaner.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4>Pipeline</h4>
+        <img src="public/images/pipeline.jpeg" style="width:60%;height:60%;"></img>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <h4>Final Design</h4>
+        <ul>
+          <li>For our final prototype, we decided to go with Aadam’s two page approach instead of Cassie’s three page approach for the sake of simplicity. In this way,
+             instead of having to go through a state’s page to locate a specific county, the user could simply press on a county from the United States map. However,
+              for the county (micro) page, we used Cassie’s method of showing life expectancies over time in a series of graphs. In Cassie’s original prototype, she didn’t
+               take race into account, but Aadam’s emphasis on both gender and race led the final prototype to have a micropage with four separate graphs, one for white females,
+                one for white males, one for Black females, and one for Black men. In this way, the final prototype was a combination of both of our prototypes. </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+</body>
+
+</html>
