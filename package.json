@@ -4,7 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "precompile": "npm run rimraf build/* && npm run rimraf dist/*",
+    "compile:css": "./node_modules/less/bin/lessc ./src/LESS/styles.less > ./build/css/styles.css",
+    "compile:html": "node blog_generator.js",
+    "compile": "npm run compile:css && npm run compile:html",
+    "lint": "jshint ./build/js/*.js",
+    "build": "npm run compile && npm run lint",
+    "squish": "mkdir dev && minify blog_generator.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +25,15 @@
   "dependencies": {
     "ejs": "^3.1.5",
     "fs": "0.0.1-security",
-    "less": "^3.12.2"
+    "jshint": "^2.12.0",
+    "less": "^3.12.2",
+    "rimraf": "^3.0.2"
+  },
+  "jshintConfig": {
+    "curly": true,
+    "eqeqeq": true,
+    "undef": true,
+    "unused": true,
+    "varstmt": true
   }
 }

@@ -1,32 +1,8 @@
 <!doctype html>
 <html>
 
-<html lang="en">
-<meta name="author" content="Aadam Faheem & Cassie Elish">
-<link rel="stylesheet" href="css/styles.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-
-
-<body>
-<header>
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <h1 class="text-center">How Long Do We Live?</h1>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <h2 class="text-center">By: Aadam Faheem & Cassie Elish</h2>
-      </div>
-    </div>
-  </div>
-  <!--nav bar-->
-</header>
-<!--end incorporation into header.ejs-->
-
-
+<%- include('global/header'); %>
+<%- include('global/navbar'); %>
 
   <div class="container-fluid">
     <div class="row">
@@ -121,7 +97,7 @@
     </div>
   </div>
 
-
+<%- include('global/footer'); %>
 
 
 </body>
