@@ -25,6 +25,7 @@
   "dependencies": {
     "ejs": "^3.1.5",
     "fs": "0.0.1-security",
+    "jest": "^26.6.3",
     "jshint": "^2.12.0",
     "less": "^3.12.2",
     "rimraf": "^3.0.2"
@@ -35,5 +36,11 @@
     "undef": true,
     "unused": true,
     "varstmt": true
+  },
+  "jest": {
+    "verbose": true,
+    "testMatch": [
+      "**/test/**/*.test.js"
+    ]
   }
 }
