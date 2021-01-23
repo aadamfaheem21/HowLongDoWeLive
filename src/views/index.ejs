@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html>
+<meta charset="utf-8">
+<%- include('global/header.ejs') %>
+<%- include('global/mainnavbar.ejs') %>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+
+<body>
+
+<div class="container-fluid body">
+  <div class="row">
+    <div class="col-12">
+  <h1 class= "description">Description</h1>
+</div>
+</div>
+    <div class="row">
+  <p class="description">The choropleth map below maps out life expectancy across various counties in the United States. By hovering over a county, the county name, county FIPS code, and the life expectancy for the specified demographic in that county appear in a popup. Click on the buttons (eg. Male Life Expectancy over Time) to see different choropleths displaying different data. If the data
+     states "over time," it is possible to adjust the year using the slider at the bottom of the map. Press the pause/play button to trigger an animation of the data over time. If you click on one of the counties, you will be taken to a page that has more information about the data for that county.
+   Through this project, we hope that others can use our data visualizations to analyze trends relating to life expectancy and other factors such as geographic location, race, and gender are taken into account. Please note that much of our data for Black Americans is incomplete due to lack of reporting.
+ This shows the systemic inequality that exists in our country in regards to census taking and data.</p>
+</div>
+<div class="interactivegraph">
+<div class="row">
+  <div class"col-10">
+  <button onclick="switchMap('Female life expectancy (years)')">Female Life Expectancy Over Time</button>
+  <br>
+  <button onclick="switchMap('Male life expectancy (years)')">Male Life Expectancy Over Time</button>
+</div>
+<div class"col-3">
+  <button onclick="switchMap('Black male life expectancy (years)')">Black Male Life Expectancy Over Time</button>
+  <br>
+  <button onclick="switchMap('White male life expectancy (years)')">White Male Life Expectancy Over Time</button>
+  </div>
+  <div class"col-3">
+  <button onclick="switchMap('Black female life expectancy (years)')">Black Female Life Expectancy Over Time</button>
+  <br>
+  <button onclick="switchMap('White female life expectancy (years)')">White Female Life Expectancy Over Time</button>
+  </div>
+  <div class"col-3">
+  <button onclick="switchMap('Female life expectancy change 1987 to 2009 (years)')">Change in Female Life Expectancy from 1987 to 2009</button>
+  <br>
+  <button onclick="switchMap('Male life expectancy change 1987 to 2009 (years)')">Change in Male Life Expectancy from 1987 to 2009</button>
+  </div>
+</div>
+<div class="row">
+  <div id="map">
+  </div>
+</div>
+</div>
+</div>
+<script>
+<%let test = data %>
+  function createMap(value, bool) {
+    var slider_steps = [];
+    var frames = [];
+    var output = JSON.parse('<%- test %>');
+
+
+    var n = 0;
+    var year = 1987
+    var measure = value;
+    while (n < 23) {
+      var zvalues = []
+      var years = []
+      var states = []
+      var fipscodes = []
+      var counties = []
+
+      for (var i = n; i < output.length; i += 23) {
+        zvalues.push(parseInt(output[i][measure]))
+
+        years.push(output[i].Year)
+        states.push(output[i].State)
+        counties.push(output[i].County)
+        if (output[i].fips.length < 5) {
+
+          fipscodes.push("0" + output[i].fips)
+        } else {
+          fipscodes.push(output[i].fips)
+        }
+      }
+      frames[n] = {
+        data: [{
+          z: zvalues,
+          locations: fipscodes,
+          text: counties
+        }],
+        name: year.toString()
+      };
+
+      slider_steps.push({
+        label: year.toString(),
+        method: "animate",
+        args: [
+          [year], {
+            mode: "immediate",
+            transition: {
+              duration: 1000
+            },
+            frame: {
+              duration: 1000
+            }
+          }
+        ]
+      })
+      n++;
+      year++;
+    }
+
+    var data = []
+    if (bool == true) {
+      data = [{
+        type: "choroplethmapbox",
+        locations: frames[0].data[0].locations,
+        z: frames[0].data[0].z,
+        text: frames[0].data[0].text,
+        geojson: "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json",
+        zmin: 54,
+        zmax: 88,
+        colorbar: {
+              title: 'Life<br>Expectancy',
+          }
+      }];
+    } else {
+      data = [{
+        type: "choroplethmapbox",
+        locations: frames[0].data[0].locations,
+        z: frames[0].data[0].z,
+        text: frames[0].data[0].text,
+        geojson: "https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json"
+      }];
+    }
+
+
+    var layout = {}
+    if (bool == true) {
+      layout = {
+        paper_bgcolor: "rgba(0,0,0,0)",
+        mapbox: {
+          center: {
+            lon: -98.5795,
+            lat: 39.8283
+          },
+          zoom: 3.2
+        },
+        width: 1400,
+        height: 800,
+        title: value,
+        updatemenus: [{
+          x: 0.1,
+          y: 0,
+          yanchor: "top",
+          xanchor: "right",
+          showactive: false,
+          direction: "left",
+          type: "buttons",
+          pad: {
+            "t": 87,
+            "r": 10
+          },
+          buttons: [{
+            method: "animate",
+            args: [null, {
+              fromcurrent: true,
+              transition: {
+                duration: 1000,
+              },
+              frame: {
+                duration: 1000
+              }
+            }],
+            label: "Play"
+          }, {
+            method: "animate",
+            args: [
+              [null],
+              {
+                mode: "immediate",
+                transition: {
+                  duration: 0
+                },
+                frame: {
+                  duration: 0
+                }
+              }
+            ],
+            label: "Pause"
+          }]
+        }],
+        sliders: [{
+          active: 0,
+          steps: slider_steps,
+          x: 0.1,
+          len: 0.9,
+          xanchor: "left",
+          y: 0,
+          yanchor: "top",
+          pad: {
+            t: 50,
+            b: 10
+          },
+          currentvalue: {
+            visible: true,
+            prefix: "Year:",
+            xanchor: "right",
+            font: {
+              size: 20,
+              color: "#666"
+            }
+          },
+          transition: {
+            duration: 1000,
+            easing: "cubic-in-out"
+          }
+        }],
+      };
+    } else {
+      layout = {
+        paper_bgcolor: "rgba(0,0,0,0)",
+        mapbox: {
+          center: {
+            lon: -98.5795,
+            lat: 39.8283
+          },
+          zoom: 3.2
+        },
+        width: 1400,
+        height: 800,
+        title: value
+      }
+    }
+
+    var config = {
+      mapboxAccessToken: "pk.eyJ1IjoiYWFkYW1mYWhlZW0yMSIsImEiOiJja2pxazhzZGcwMnl3MzFvejc1bWRtamx4In0.m1XgxP1CsrjeYpDhNeJmXA"
+    };
+    if (bool = true) {
+      Plotly.newPlot('map', data, layout, config).then(gd => {
+        gd.on('plotly_click', d => {
+          var pt = (d.points || [])[0]
+          for (i in fipscodes) {
+            if (pt.location == fipscodes[i]) {
+              window.location.replace("countypages/" + counties[i].replace(/ /g, "-") + ".html");
+              break;
+            }
+          }
+
+        })
+      }).then(function() {
+        Plotly.addFrames('map', frames);
+      });
+    } else {
+      Plotly.newPlot('map', data, layout, config).then(gd => {
+        gd.on('plotly_click', d => {
+          var pt = (d.points || [])[0]
+          for (i in fipscodes) {
+            if (pt.location == fipscodes[i]) {
+              window.location.replace(counties[i].replace(/ /g, "-") + ".html");
+              break;
+            }
+          }
+
+        })
+      })
+    }
+  }
+
+  createMap("Male life expectancy (years)", true);
+
+  function switchMap(phrase) {
+    if (phrase.includes("change")) {
+      createMap(phrase, false);
+    } else {
+      createMap(phrase, true);
+    }
+  }
+
+  </script>
+  <%-include('global/footer.ejs')%>
+
+
+  </body>
+
+</html>

@@ -1,7 +1,6 @@
 <!doctype html>
 <html>
 
-<html lang="en">
 <meta name="author" content="Aadam Faheem & Cassie Elish">
 <link rel="stylesheet" href="css/styles.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -11,7 +10,7 @@
 
 <body>
 <header>
-  <div class="container-fluid">
+  <div class="container-fluid titleauthors">
     <div class="row">
       <div class="col-12">
         <h1 class="text-center">How Long Do We Live?</h1>
@@ -38,13 +37,15 @@
   </ul>
 </nav>
 </header>
-<br>
 
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<script src='https://cdn.plot.ly/plotly-latest.min.js'></script>
+<body>
   <div class="container-fluid">
     <div class="row">
       <div class="col-2">
-        <h2>Vocabulary</h2>
+        <h2>Vocabulary & Project Notes</h2>
       </div>
       <div class="col-10">
         <h2>Initial Prototypes</h2>
@@ -52,8 +53,16 @@
     </div>
     <div class="row">
       <div class="col-2">
+        <h4> A note about data in this project: </h4>
+        <p> <a href="http://ghdx.healthdata.org/record/united-states-adult-life-expectancy-state-and-county-1987-2009">Our data source</a>, which we used to generate charts and textual analysis,
+          was missing many data points when it came to the life expectancies of Black men and women. For our charts, we tried to fill in the gaps as much as we could, but for some counties (and even states),
+          there was not a single data point collected. This is why the map and charts for life expectancies of Black men and women will not be entirely filled in, or, in some cases, left blank. We hope that
+          more recent data collected is more inclusive, and able to provide a more accurate depiction of Black people's life expectancies throughout the US. </p>
+        <h4> Vocabulary </h4>
         <ul>
           <li>Life expectancy: how long a person is expected to live, in years</li>
+          <li>County: a political and administrative division of a state (there are multiple counties per state)</li>
+          <li>FIPS code: a code that represents a specific United States county -- each county has its own FIPS code</li>
         </ul>
       </div>
 
@@ -117,7 +126,17 @@
     <div class="row">
       <div class="col-12">
         <h4>Pipeline</h4>
-        <img src="images/pipeline.jpeg" style="width:60%;height:60%;"></img>
+        <img src="images/pipeline.jpg" style="width:60%;height:60%;"></img>
+      </div>
+      <div class="col-12">
+        <h4>Pipeline Description</h4>
+        <ul>
+          <li> The first thing we needed to do in order for our project to suceed was transfer the data we'd gotten online, which was in a CSV file, into a JSON file, which could then be accessed by our code. We used the package fs to accomplish this, and put our code in page_generator.js. </li>
+          <li> Adding on to page_generator.js, we wrote code that would generate the macropage, micropages, and about page when ran. </li>
+          <li> Next, we began to divide and conquer. Aadam wrote the ejs template for index.html, which contains a clorophleth map of life expectancies in all counties in the United States. Cassie wrote the ejs template for the micropages, which displayed line charts of life expectancies in a specific county. </li>
+          <li> Continuing our divide and conquer strategy, Aadam wrote the npm pipeline -- a series of commands ran in Terminal that compiled and double-checked code -- while Cassie wrote ten Jest tests that iterated through the JSON data to make sure nothing was amiss. </li>
+          <li> Finally, we added the finishing touches to our project: adding LESS, which generates CSS for all HTML pages, and updating the about page. </li>
+        </ul>
       </div>
     </div>
     <div class="row">
@@ -131,12 +150,28 @@
                 one for white males, one for Black females, and one for Black men. In this way, the final prototype was a combination of both of our prototypes. </li>
         </ul>
       </div>
+      <div class="col-12">
+        <h4>Division of labor</h4>
+        <ul>
+          <li> Aadam: created the output.json JSON generator, the macropage, and the npm pipeline </li>
+          <li> Cassie: created the county.json JSON generator, the micropages, and the jest tests </li>
+      </div>
     </div>
   </div>
 
-
-
-
 </body>
+
+<div class="footer">
+<footer>
+  <p class=>All data from: <a href="http://ghdx.healthdata.org/record/united-states-adult-life-expectancy-state-and-county-1987-2009">The Global Health Data Exchange</a>
+  <br>
+  This site can not be used without expressed consent from the authors.
+  <br>
+  Authors: Aadam Faheem and Cassie Eilish
+  <br>
+  Created: January 2021</p>
+</footer>
+</div>
+
 
 </html>

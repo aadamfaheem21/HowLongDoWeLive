@@ -4,14 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "precompile": "npm run rimraf build/* && npm run rimraf dist/*",
+    "precompile": "node util/precompile.js",
     "compile:css": "./node_modules/less/bin/lessc ./src/LESS/styles.less > ./build/css/styles.css",
-    "compile:html": "node generator.js",
+    "compile:html": "node util/page_generator.js",
     "compile": "npm run compile:css && npm run compile:html",
+    "test": "Jest",
     "lint": "jshint ./build/js/*.js",
-    "build": "npm run compile && npm run lint",
-    "squish": "mkdir dev && minify generator.js",
-    "build:start": "open http://127.0.0.1:8080 && node ./node_modules/http-server/bin/http-server ./build"
+    "document": "./node_modules/jsdoc/jsdoc.js ./util/page_generator.js -d docs",
+    "build": "npm run precompile && npm run compile && npm run document && npm run test && npm run lint"
   },
   "repository": {
     "type": "git",
@@ -27,18 +27,20 @@
     "d3": "^6.3.1",
     "ejs": "^3.1.5",
     "fs": "0.0.1-security",
+    "http-server": "^0.12.3",
     "jest": "^26.6.3",
+    "jsdoc": "^3.6.6",
     "jshint": "^2.12.0",
     "less": "^3.12.2",
-    "rimraf": "^3.0.2",
-    "http-server": "^0.12.3"
+    "rimraf": "^3.0.2"
   },
   "jshintConfig": {
     "curly": true,
     "eqeqeq": true,
     "undef": true,
     "unused": true,
-    "varstmt": true
+    "varstmt": true,
+    "esversion": 6
   },
   "jest": {
     "verbose": true,

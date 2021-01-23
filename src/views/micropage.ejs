@@ -1,0 +1,327 @@
+<html>
+<%- include('global/countyheader.ejs') %>
+<%- include('global/countynavbar.ejs') %>
+
+<body>
+
+<div class="container-fluid body">
+  <div class="row">
+    <h2 class = "description"> Life Expectancies at Birth in <%- name %> </h2>
+  </div>
+  <div class="row">
+    <div class="col-1">
+      <p></p>
+    </div>
+    <div class=col-5>
+  <div id="overallLifeChart"> </div>
+  </div>
+  <div class=col-5>
+  <div id="whiteLifeChart"> </div>
+</div>
+<div class="col-1">
+  <p></p>
+</div>
+</div>
+<div class="row">
+  <div class="col-3">
+    <p></p>
+  </div>
+  <div class="col-6">
+  <div id="blackLifeChart"> </div>
+  </div>
+  <div class="col-3">
+    <p></p>
+  </div>
+  </div>
+  <div class="row">
+    <div class="col-3 description">
+      *Please note that there may be missing data for Black Americans due to inequalities in data reporting.
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 bottomtext">
+      <h3>Analysis</h3>
+      <p>
+      <% let smrelationship = ""; %>
+      <% if (objdata["maleLife"][0] < objdata["maleLife"][22]) { %>
+      <% smrelationship = "increased"; %>
+      <% } else if (objdata["maleLife"][0] > objdata["maleLife"][22]) { %>
+      <% smrelationship = "decreased"; %>
+      <% } else { %>
+      <% smrelationship = "stayed the same"; %>
+      <% } %>
+      From 1987 to 2009, average male life expectancy in
+        <%=name%>
+        <%=smrelationship%> by approximately
+        <%= Math.round(Math.abs(objdata["maleLife"][22]-objdata["maleLife"][0])) %> years.
+        The United States' average male life expectancy increased by 5 years over the same time period.
+
+      <% let sfrelationship = ""; %>
+      <% if (objdata["femaleLife"][0] < objdata["femaleLife"][22]) { %>
+      <% sfrelationship = "increased"; %>
+      <% } else if (objdata["femaleLife"][0] > objdata["femaleLife"][22]) { %>
+      <% sfrelationship = "decreased"; %>
+      <% } else { %>
+      <% sfrelationship = "stayed the same"; %>
+      <% } %>
+      From 1987 to 2009, average female life expectancy in
+        <%=name%>
+        <%=sfrelationship%> by approximately
+        <%= Math.round(Math.abs(objdata["femaleLife"][22]-objdata["femaleLife"][0])) %> years.
+      The United States' average female life expectancy increased by 3 years over the same time period.
+      <% let myear = 1987; %>
+      <% let fyear = 1987; %>
+      <% let mrelationship = ""; %>
+      <% let frelationship = ""; %>
+      <% let mprelationship = ""; %>
+      <% let fprelationship = ""; %>
+      <% let myearCount = 0; %>
+      <% let fyearCount = 0; %>
+      <% for (let i = 0; i <= 22; i ++) { %>
+      <%if (us["male"][i] > objdata["maleLife"][i]) {%>
+      <%if (i == 0) {%>
+      <%  mprelationship = "less than"; %>
+      <% } %>
+      <%mrelationship = "less than"; %>
+      <%} else if (us["male"][i] < objdata["maleLife"][i]) {%>
+      <%if (i == 0) {%>
+      <%  mprelationship = "greater than"; %>
+      <% } %>
+      <%mrelationship = "greater than"; %>
+      <%} else {%>
+      <%if (i == 0) {%>
+      <%  mprelationship = "equal to"; %>
+      <% } %>
+      <%mrelationship = "equal to"; %>
+      <%}%>
+      <%if (mprelationship != mrelationship || i == 22) {%>
+      <% if (myearCount == 0) {%>
+      In
+        <%= myear%> the average male life expectancy in
+        <%= name %> was
+        <%= mprelationship %> the United States' average male life expectancy.
+      <%} else { %>
+      From
+        <%=myear-myearCount %> to
+        <%= myear%> the average male life expectancy in
+        <%= name %> was
+        <%= mprelationship %> the United States' average male life expectancy.
+      <%}%>
+      <%myearCount = 0; %>
+      <%mprelationship = mrelationship; %>
+      <%} else { %>
+      <%myearCount ++; %>
+      <%}%>
+      <% myear ++; %>
+      <% } %>
+
+      <% for (let i = 0; i <= 22; i ++) { %>
+      <%if (us["female"][i] > objdata["femaleLife"][i]) {%>
+      <%if (i == 0) {%>
+      <%  fprelationship = "less than"; %>
+      <% } %>
+      <%frelationship = "less than"; %>
+      <%} else if (us["female"][i] < objdata["femaleLife"][i]) {%>
+      <%if (i == 0) {%>
+      <%  fprelationship = "greater than"; %>
+      <% } %>
+      <%frelationship = "greater than"; %>
+      <%} else {%>
+      <%if (i == 0) {%>
+      <%  fprelationship = "equal to"; %>
+      <% } %>
+      <%frelationship = "equal to"; %>
+      <%}%>
+      <%if (fprelationship != frelationship || i == 22) {%>
+      <% if (fyearCount == 0) {%>
+      In
+        <%= fyear%> the average female life expectancy in
+        <%= name %> was
+        <%= fprelationship %> the United States' average female life expectancy.
+      <%} else { %>
+      From
+        <%=fyear-fyearCount %> to
+        <%= fyear%> the average female life expectancy in
+        <%= name %> was
+        <%= fprelationship %> the United States' average female life expectancy.
+      <%}%>
+      <%fyearCount = 0; %>
+      <%fprelationship = frelationship; %>
+      <%} else { %>
+      <%fyearCount ++; %>
+      <%}%>
+      <% fyear ++; %>
+      <% } %>
+    </p>
+    </div>
+  </div>
+</div>
+
+
+
+  <script>
+
+    var lineDiv = document.getElementById('overallLifeChart');
+
+    var maleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["maleLife"][0]%>, <%-objdata["maleLife"][1]%>, <%-objdata["maleLife"][2]%>, <%-objdata["maleLife"][3]%>, <%-objdata["maleLife"][4]%>, <%-objdata["maleLife"][5]%>, <%-objdata["maleLife"][6]%>,
+        <%-objdata["maleLife"][7]%>, <%-objdata["maleLife"][8]%>, <%-objdata["maleLife"][9]%>, <%-objdata["maleLife"][10]%>, <%-objdata["maleLife"][11]%>, <%-objdata["maleLife"][12]%>, <%-objdata["maleLife"][13]%>,
+        <%-objdata["maleLife"][14]%>, <%-objdata["maleLife"][15]%>, <%-objdata["maleLife"][16]%>, <%-objdata["maleLife"][17]%>, <%-objdata["maleLife"][18]%>, <%-objdata["maleLife"][19]%>, <%-objdata["maleLife"][20]%>,
+        <%-objdata["maleLife"][21]%>, <%-objdata["maleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'Male Life Expectancy',
+      line: {
+        color: 'rgb(176, 185, 245)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var femaleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["femaleLife"][0]%>, <%-objdata["femaleLife"][1]%>, <%-objdata["femaleLife"][2]%>, <%-objdata["femaleLife"][3]%>, <%-objdata["femaleLife"][4]%>, <%-objdata["femaleLife"][5]%>, <%-objdata["femaleLife"][6]%>,
+        <%-objdata["femaleLife"][7]%>, <%-objdata["femaleLife"][8]%>, <%-objdata["femaleLife"][9]%>, <%-objdata["femaleLife"][10]%>, <%-objdata["femaleLife"][11]%>, <%-objdata["femaleLife"][12]%>, <%-objdata["femaleLife"][13]%>,
+        <%-objdata["femaleLife"][14]%>, <%-objdata["femaleLife"][15]%>, <%-objdata["femaleLife"][16]%>, <%-objdata["femaleLife"][17]%>, <%-objdata["femaleLife"][18]%>, <%-objdata["femaleLife"][19]%>, <%-objdata["femaleLife"][20]%>,
+        <%-objdata["femaleLife"][21]%>, <%-objdata["femaleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'Female Life Expectancy',
+      line: {
+        color: 'rgb(242, 203, 230)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var data = [maleLifeExpectancy, femaleLifeExpectancy];
+
+    var layout = {
+      paper_bgcolor: "rgba(0,0,0,0)",
+      title: 'Overall Male and Female Life Expectancy from 1987 to 2009',
+      xaxis: {
+        title: 'Time (years)'
+      },
+      yaxis: {
+        title: 'Expected Longevity (years)',
+        range: [55, 90]
+      }
+    };
+
+    Plotly.plot(lineDiv, data, layout);
+    //white life expectancy chart
+    var whiteLineDiv = document.getElementById('whiteLifeChart');
+
+    var whiteMaleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["whiteMaleLife"][0]%>, <%-objdata["whiteMaleLife"][1]%>, <%-objdata["whiteMaleLife"][2]%>, <%-objdata["whiteMaleLife"][3]%>, <%-objdata["whiteMaleLife"][4]%>, <%-objdata["whiteMaleLife"][5]%>, <%-objdata["whiteMaleLife"][6]%>,
+        <%-objdata["whiteMaleLife"][7]%>, <%-objdata["whiteMaleLife"][8]%>, <%-objdata["whiteMaleLife"][9]%>, <%-objdata["whiteMaleLife"][10]%>, <%-objdata["whiteMaleLife"][11]%>, <%-objdata["whiteMaleLife"][12]%>,
+        <%-objdata["whiteMaleLife"][13]%>,
+        <%-objdata["whiteMaleLife"][14]%>, <%-objdata["whiteMaleLife"][15]%>, <%-objdata["whiteMaleLife"][16]%>, <%-objdata["whiteMaleLife"][17]%>, <%-objdata["whiteMaleLife"][18]%>, <%-objdata["whiteMaleLife"][19]%>,
+        <%-objdata["whiteMaleLife"][20]%>,
+        <%-objdata["whiteMaleLife"][21]%>, <%-objdata["whiteMaleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'White Male Life Expectancy',
+      line: {
+        color: 'rgb(176, 185, 245)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var whiteFemaleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["whiteFemaleLife"][0]%>, <%-objdata["whiteFemaleLife"][1]%>, <%-objdata["whiteFemaleLife"][2]%>, <%-objdata["whiteFemaleLife"][3]%>, <%-objdata["whiteFemaleLife"][4]%>, <%-objdata["whiteFemaleLife"][5]%>,
+        <%-objdata["whiteFemaleLife"][6]%>,
+        <%-objdata["whiteFemaleLife"][7]%>, <%-objdata["whiteFemaleLife"][8]%>, <%-objdata["whiteFemaleLife"][9]%>, <%-objdata["whiteFemaleLife"][10]%>, <%-objdata["whiteFemaleLife"][11]%>, <%-objdata["whiteFemaleLife"][12]%>,
+        <%-objdata["whiteFemaleLife"][13]%>,
+        <%-objdata["whiteFemaleLife"][14]%>, <%-objdata["whiteFemaleLife"][15]%>, <%-objdata["whiteFemaleLife"][16]%>, <%-objdata["whiteFemaleLife"][17]%>, <%-objdata["whiteFemaleLife"][18]%>, <%-objdata["whiteFemaleLife"][19]%>,
+        <%-objdata["whiteFemaleLife"][20]%>,
+        <%-objdata["whiteFemaleLife"][21]%>, <%-objdata["whiteFemaleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'White Female Life Expectancy',
+      line: {
+        color: 'rgb(242, 203, 230)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var whiteData = [whiteMaleLifeExpectancy, whiteFemaleLifeExpectancy];
+
+    var whiteLayout = {
+      paper_bgcolor: "rgba(0,0,0,0)",
+      title: 'White Male and Female Life Expectancy from 1987 to 2009',
+      xaxis: {
+        title: 'Time (years)'
+      },
+      yaxis: {
+        title: 'Expected Longevity (years)',
+        range: [55, 90]
+      }
+    };
+    Plotly.plot(whiteLineDiv, whiteData, whiteLayout);
+
+    //black life expectancy chart
+    var blackLineDiv = document.getElementById('blackLifeChart');
+
+    var blackMaleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["blackMaleLife"][0]%>, <%-objdata["blackMaleLife"][1]%>, <%-objdata["blackMaleLife"][2]%>, <%-objdata["blackMaleLife"][3]%>, <%-objdata["blackMaleLife"][4]%>, <%-objdata["blackMaleLife"][5]%>, <%-objdata["blackMaleLife"][6]%>,
+        <%-objdata["blackMaleLife"][7]%>, <%-objdata["blackMaleLife"][8]%>, <%-objdata["blackMaleLife"][9]%>, <%-objdata["blackMaleLife"][10]%>, <%-objdata["blackMaleLife"][11]%>, <%-objdata["blackMaleLife"][12]%>,
+        <%-objdata["blackMaleLife"][13]%>,
+        <%-objdata["blackMaleLife"][14]%>, <%-objdata["blackMaleLife"][15]%>, <%-objdata["blackMaleLife"][16]%>, <%-objdata["blackMaleLife"][17]%>, <%-objdata["blackMaleLife"][18]%>, <%-objdata["blackMaleLife"][19]%>,
+        <%-objdata["blackMaleLife"][20]%>,
+        <%-objdata["blackMaleLife"][21]%>, <%-objdata["blackMaleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'Black Male Life Expectancy',
+      line: {
+        color: 'rgb(176, 185, 245)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var blackFemaleLifeExpectancy = {
+      x: [1987, 1988, 1989, 1990, 1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009],
+      y: [<%-objdata["blackFemaleLife"][0]%>, <%-objdata["blackFemaleLife"][1]%>, <%-objdata["blackFemaleLife"][2]%>, <%-objdata["blackFemaleLife"][3]%>, <%-objdata["blackFemaleLife"][4]%>, <%-objdata["blackFemaleLife"][5]%>,
+        <%-objdata["blackFemaleLife"][6]%>,
+        <%-objdata["blackFemaleLife"][7]%>, <%-objdata["blackFemaleLife"][8]%>, <%-objdata["blackFemaleLife"][9]%>, <%-objdata["blackFemaleLife"][10]%>, <%-objdata["blackFemaleLife"][11]%>, <%-objdata["blackFemaleLife"][12]%>,
+        <%-objdata["blackFemaleLife"][13]%>,
+        <%-objdata["blackFemaleLife"][14]%>, <%-objdata["blackFemaleLife"][15]%>, <%-objdata["blackFemaleLife"][16]%>, <%-objdata["blackFemaleLife"][17]%>, <%-objdata["blackFemaleLife"][18]%>, <%-objdata["blackFemaleLife"][19]%>,
+        <%-objdata["blackFemaleLife"][20]%>,
+        <%-objdata["blackFemaleLife"][21]%>, <%-objdata["blackFemaleLife"][22]%>
+      ],
+      type: 'scatter',
+      name: 'Black Female Life Expectancy',
+      line: {
+        color: 'rgb(242, 203, 230)',
+        width: 3
+      },
+      connectgaps: true
+    };
+
+    var blackData = [blackMaleLifeExpectancy, blackFemaleLifeExpectancy];
+
+    var blackLayout = {
+      paper_bgcolor: "rgba(0,0,0,0)",
+      title: 'Black Male and Female Life Expectancy from 1987 to 2009',
+      xaxis: {
+        title: 'Time (years)'
+      },
+      yaxis: {
+        title: 'Expected Longevity (years)',
+        range: [55, 90],
+      }
+    };
+    Plotly.plot(blackLineDiv, blackData, blackLayout);
+  </script>
+
+</body>
+<%- include('global/footer.ejs') %>
+
+</html>
